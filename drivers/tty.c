@@ -2,15 +2,14 @@
 
 #include <port.h>
 
-void kprint_at(char *str, int col, int row);
-int print_char(char c, int col, int row, char attr_byte);
+static void kprint_at(char *str, int col, int row);
+static int print_char(char c, int col, int row, char attr_byte);
 
-int get_cursor_offset();
-void set_cursor_offset(int offset);
-int get_screen_offset(int col, int row);
-int get_offset_row(int offset);
-int get_offset_col(int offset);
-
+static int get_cursor_offset();
+static void set_cursor_offset(int offset);
+static int get_screen_offset(int col, int row);
+static int get_offset_row(int offset);
+static int get_offset_col(int offset);
 
 void kprint(char *str)
 {
