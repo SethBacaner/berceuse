@@ -5,7 +5,7 @@
  *
  */
 
-#include "port.h"
+#include <port.h>
 
 unsigned char port_byte_in(unsigned short port)
 {

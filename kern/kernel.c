@@ -1,4 +1,4 @@
-#include "tty.h"
+#include <tty.h>
 
 void kmain()
 {

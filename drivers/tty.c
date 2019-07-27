@@ -1,6 +1,6 @@
-#include "tty.h"
+#include <tty.h>
 
-#include "port.h"
+#include <port.h>
 
 void kprint_at(char *str, int col, int row);
 int print_char(char c, int col, int row, char attr_byte);
@@ -102,7 +102,7 @@ void clear_screen()
     }
   }
 
-  /* Returns the cursor position to (0, 0). */  
+  /* Returns the cursor position to (0, 0). */
   set_cursor_offset(get_screen_offset(0, 0));
 }
 
@@ -120,4 +120,3 @@ int get_offset_col(int offset)
 {
   return (offset - (get_offset_row(offset) * 2 * MAX_COLS )) / 2;
 }
-

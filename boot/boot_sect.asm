@@ -15,11 +15,11 @@ KERNEL_OFFSET equ 0x1000
 
   jmp $
 
-%include "gdt.asm"
-%include "rm_print.asm"
-%include "pm_print.asm"
-%include "protected_mode_switch.asm"
-%include "disk_load.asm"
+%include "boot/gdt.asm"
+%include "boot/rm_print.asm"
+%include "boot/pm_print.asm"
+%include "boot/protected_mode_switch.asm"
+%include "boot/disk_load.asm"
 
 [bits 16]
 
