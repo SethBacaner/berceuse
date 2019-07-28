@@ -1,4 +1,4 @@
-C_SOURCES = $(wildcard kern/*.c drivers/*.c)
+C_SOURCES = $(wildcard kern/*.c drivers/*.c lib/*.c)
 INCLUDE_DIR = include/
 OBJ = ${C_SOURCES:.c=.o}
 

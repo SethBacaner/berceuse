@@ -1,3 +1,4 @@
+#include <lib.h>
 #include <tty.h>
 
 void kmain()
