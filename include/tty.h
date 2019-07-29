@@ -1,10 +1,11 @@
 /*
  * tty.h
- * 
+ *
  * Teletype display and setup.
  */
-#ifndef KERNEL_TTY_H_
-#define KERNEL_TTY_H_
+
+#ifndef BERCEUSE_TTY_H_
+#define BERCEUSE_TTY_H_
 
 #define VIDEO_MEM_ADDR 0xb8000
 #define MAX_ROWS 25
@@ -15,7 +16,7 @@
 /*
  * Convenience macros that can be |'d together to change text and background
  * color.
- */ 
+ */
 #define BLACK_TEXT          0x0
 #define BLUE_TEXT           0x1
 #define GREEN_TEXT          0x2
@@ -45,4 +46,4 @@ void kprint(char *str);
 
 void clear_screen();
 
-#endif /* KERNEL_TTY_H_ */
+#endif /* BERCEUSE_TTY_H_ */

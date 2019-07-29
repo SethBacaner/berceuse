@@ -37,5 +37,5 @@ void panic()
   (void)line;
   (void)func;
 
-  panic("Assertion failed!");
+  panic();
 }
