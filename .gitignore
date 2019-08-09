@@ -1,0 +1,4 @@
+*[.o]
+*[.bin]
+# We might want to commit some ELF files later for testing purposes.
+kernel.elf
