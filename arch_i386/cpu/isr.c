@@ -41,7 +41,6 @@ void isr_bootstrap()
   load_idt();
 }
 
-// Might not compile because iframe might need to not be a pointer.
 void isr_handler(interrupt_frame_t iframe)
 {
   kprint("interrupt!");
