@@ -1,6 +1,6 @@
-C_SOURCES = $(wildcard kern/*.c drivers/*.c lib/*.c)
+C_SOURCES = $(wildcard kern/*.c drivers/*.c lib/*.c arch_i386/cpu/*.c)
 INCLUDE_DIR = include/
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${C_SOURCES:.c=.o arch_i386/cpu/interrupt.o}
 
 CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
 CFLAGS = -g

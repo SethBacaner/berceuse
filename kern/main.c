@@ -1,17 +1,13 @@
+#include <arch_i386/isr.h>
 #include <lib.h>
 #include <tty.h>
 
 void kmain()
 {
+  isr_bootstrap();
   clear_screen();
-  kprint("Hello world!");
+  kprint("Interrupts have been bootstrapped.");
 
-  int* new_ints = kmalloc(4000);
-  int i;
-  for (i = 0; i < 500; ++i)
-  {
-    new_ints[i] = i;
-  }
-
-  kprint("kmalloc test");
+  __asm__ __volatile__("int $2");
+  __asm__ __volatile__("int $3");
 }
