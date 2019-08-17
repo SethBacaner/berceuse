@@ -3,6 +3,16 @@
 
 #include <arch_i386/types.h>
 
+#define PIC_MASTER_CMD  0x20
+#define PIC_MASTER_DATA 0x21
+#define PIC_SLAVE_CMD   0xA0
+#define PIC_SLAVE_DATA  0xA1
+
+/* Initialiation Command Words for Intel 8259A PIC */
+#define ICW1_ICW4	0x01
+#define ICW1_INIT	0x10
+#define ICW4_8086	0x01
+
 /* Defined in interrupt.asm */
 extern void isr0();
 extern void isr1();
@@ -58,5 +68,11 @@ typedef struct {
 
 void isr_bootstrap();
 void isr_handler(interrupt_frame_t iframe);
+
+/*
+ * Puts three nops in the pipeline so that a previous I/O operation can
+ * finish if there is bus contention.
+ */
+void do_nops();
 
 #endif /* BERCEUSE_ARCH_I386_ISR_H_ */

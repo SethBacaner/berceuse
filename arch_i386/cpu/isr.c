@@ -2,6 +2,7 @@
 
 #include <arch_i386/idt.h>
 #include <lib.h>
+#include <port.h>
 
 void isr_bootstrap()
 {
@@ -38,6 +39,32 @@ void isr_bootstrap()
   set_idt_gate(30, (u32)isr30);
   set_idt_gate(31, (u32)isr31);
 
+  u8 pic_master_mask = port_byte_in(PIC_MASTER_DATA);
+  u8 pic_slave_mask = port_byte_in(PIC_SLAVE_DATA);
+
+  /* Remaps the PIC (Intel 8259). */
+
+  /* This 0x11 is ICW1_INIT | ICW1_ICW4 */
+  port_byte_out(PIC_MASTER_CMD, ICW1_INIT | ICW1_ICW4);
+  do_nops();
+  port_byte_out(PIC_SLAVE_CMD, ICW1_INIT | ICW1_ICW4);
+  do_nops();
+  port_byte_out(PIC_MASTER_DATA, 32);
+  do_nops();
+  port_byte_out(PIC_SLAVE_DATA, 40);
+  do_nops();
+  port_byte_out(PIC_MASTER_DATA, 0x04);
+  do_nops();
+  port_byte_out(PIC_SLAVE_DATA, 0x02);
+  do_nops();
+  port_byte_out(0x21, ICW4_8086);
+  do_nops();
+  port_byte_out(0xA1, ICW4_8086);
+  do_nops();
+
+  port_byte_out(PIC_MASTER_DATA, pic_master_mask);
+  port_byte_out(PIC_SLAVE_DATA, pic_slave_mask);
+
   load_idt();
 }
 
@@ -45,7 +72,14 @@ void isr_handler(interrupt_frame_t iframe)
 {
   kprint("interrupt!");
   int int_num = iframe.interrupt_number;
-  // kprint this number
+  /* kprint this number. */
 
   kprint("hello from isr_handler");
+}
+
+void do_nops()
+{
+  __asm__ __volatile__("nop\n\t"
+                       "nop\n\t"
+                       "nop");
 }
