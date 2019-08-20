@@ -8,6 +8,5 @@ void kmain()
   clear_screen();
   kprint("Interrupts have been bootstrapped.");
 
-  __asm__ __volatile__("int $2");
-  __asm__ __volatile__("int $3");
+  __asm__ __volatile__("int $32");
 }

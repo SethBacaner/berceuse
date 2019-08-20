@@ -4,6 +4,12 @@
 #include <lib.h>
 #include <port.h>
 
+/*
+ * Puts three nops in the pipeline so that a previous I/O operation can
+ * finish if there is bus contention.
+ */
+static void do_nops();
+
 void isr_bootstrap()
 {
   set_idt_gate(0, (u32)isr0);
@@ -39,12 +45,59 @@ void isr_bootstrap()
   set_idt_gate(30, (u32)isr30);
   set_idt_gate(31, (u32)isr31);
 
+  pic_remap();
+
+  set_idt_gate(32, (u32)irq0);
+  set_idt_gate(33, (u32)irq1);
+  set_idt_gate(34, (u32)irq2);
+  set_idt_gate(35, (u32)irq3);
+  set_idt_gate(36, (u32)irq4);
+  set_idt_gate(37, (u32)irq5);
+  set_idt_gate(38, (u32)irq6);
+  set_idt_gate(39, (u32)irq7);
+  set_idt_gate(40, (u32)irq8);
+  set_idt_gate(41, (u32)irq9);
+  set_idt_gate(42, (u32)irq10);
+  set_idt_gate(43, (u32)irq11);
+  set_idt_gate(44, (u32)irq12);
+  set_idt_gate(45, (u32)irq13);
+  set_idt_gate(46, (u32)irq14);
+  set_idt_gate(47, (u32)irq15);
+
+  load_idt();
+}
+
+void isr_handler(interrupt_frame_t iframe)
+{
+  kprint("interrupt!");
+  int int_num = iframe.interrupt_number;
+  /* kprint this number. */
+
+  kprint("hello from isr_handler");
+}
+
+void irq_handler(interrupt_frame_t iframe)
+{
+  KASSERT(iframe.interrupt_number > 31 && iframe.interrupt_number < 48);
+
+  pic_send_eoi(iframe.interrupt_number);
+
+  kprint("interrupt!");
+  /* kprint this number iframe.interrupt_number */
+
+  kprint("hello from irq_handler");
+
+  if (iframe.interrupt_number == 32)
+  {
+    kprint("handling interrupt 32!");
+  }
+}
+
+void pic_remap()
+{
   u8 pic_master_mask = port_byte_in(PIC_MASTER_DATA);
   u8 pic_slave_mask = port_byte_in(PIC_SLAVE_DATA);
 
-  /* Remaps the PIC (Intel 8259). */
-
-  /* This 0x11 is ICW1_INIT | ICW1_ICW4 */
   port_byte_out(PIC_MASTER_CMD, ICW1_INIT | ICW1_ICW4);
   do_nops();
   port_byte_out(PIC_SLAVE_CMD, ICW1_INIT | ICW1_ICW4);
@@ -64,17 +117,16 @@ void isr_bootstrap()
 
   port_byte_out(PIC_MASTER_DATA, pic_master_mask);
   port_byte_out(PIC_SLAVE_DATA, pic_slave_mask);
-
-  load_idt();
 }
 
-void isr_handler(interrupt_frame_t iframe)
+void pic_send_eoi(u8 irq)
 {
-  kprint("interrupt!");
-  int int_num = iframe.interrupt_number;
-  /* kprint this number. */
+  if (irq >= 8) {
+    port_byte_out(PIC_SLAVE_CMD, PIC_EOI);
+    do_nops();
+  }
 
-  kprint("hello from isr_handler");
+  port_byte_out(PIC_MASTER_CMD, PIC_EOI);
 }
 
 void do_nops()

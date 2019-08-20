@@ -8,6 +8,9 @@
 #define PIC_SLAVE_CMD   0xA0
 #define PIC_SLAVE_DATA  0xA1
 
+/* End of Interrupt command. */
+#define PIC_EOI 0x20
+
 /* Initialiation Command Words for Intel 8259A PIC */
 #define ICW1_ICW4	0x01
 #define ICW1_INIT	0x10
@@ -47,6 +50,23 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
+extern void irq0();
+extern void irq1();
+extern void irq2();
+extern void irq3();
+extern void irq4();
+extern void irq5();
+extern void irq6();
+extern void irq7();
+extern void irq8();
+extern void irq9();
+extern void irq10();
+extern void irq11();
+extern void irq12();
+extern void irq13();
+extern void irq14();
+extern void irq15();
+
 typedef struct {
   u32 ds;
   u32 edi;
@@ -70,9 +90,14 @@ void isr_bootstrap();
 void isr_handler(interrupt_frame_t iframe);
 
 /*
- * Puts three nops in the pipeline so that a previous I/O operation can
- * finish if there is bus contention.
+ * Remaps the PIC (Intel 8259).
  */
-void do_nops();
+void pic_remap();
+
+/*
+ * Tells master and slave (if applicable for the irq number) to turn off the
+ * interrupt line so that we can receive more interrupts.
+ */
+void pic_send_eoi(u8 irq);
 
 #endif /* BERCEUSE_ARCH_I386_ISR_H_ */
