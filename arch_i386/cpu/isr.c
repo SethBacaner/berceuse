@@ -87,9 +87,11 @@ void irq_handler(interrupt_frame_t iframe)
 
   kprint("hello from irq_handler");
 
+  /* IRQ 0 */
   if (iframe.interrupt_number == 32)
   {
     kprint("handling interrupt 32!");
+    timer_tick_interrupt(iframe);
   }
 }
 

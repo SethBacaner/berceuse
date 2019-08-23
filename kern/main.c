@@ -5,6 +5,7 @@
 void kmain()
 {
   isr_bootstrap();
+  timer_bootstrap();
   clear_screen();
   kprint("Interrupts have been bootstrapped.");
 
