@@ -8,6 +8,5 @@ void kmain()
   timer_bootstrap();
   clear_screen();
   kprint("Interrupts have been bootstrapped.");
-
-  __asm__ __volatile__("int $32");
+  __asm__ __volatile__("sti");
 }
