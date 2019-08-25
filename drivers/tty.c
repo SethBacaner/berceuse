@@ -24,8 +24,8 @@ void kprint_at(char *str, int col, int row)
     offset = get_screen_offset(col, row);
   } else {
     offset = get_cursor_offset();
-    row = get_offset_row(row);
-    col = get_offset_col(col);
+    row = get_offset_row(offset);
+    col = get_offset_col(offset);
   }
 
   int i = 0;
