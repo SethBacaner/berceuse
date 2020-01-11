@@ -7,6 +7,7 @@ void kmain()
   isr_bootstrap();
   timer_bootstrap();
   clear_screen();
-  kprint("Interrupts have been bootstrapped.");
   __asm__ __volatile__("sti");
+  kprint("\n\nInterrupts have been bootstrapped.\n\n\n");
+
 }

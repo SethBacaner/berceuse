@@ -10,8 +10,6 @@
 #include <arch_i386/isr.h>
 #include <arch_i386/types.h>
 
-u32 __volatile__ timer_ticks;
-
 #define TIMER_COMMAND_PORT 0x43
 
 /*

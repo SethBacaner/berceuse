@@ -1,12 +1,13 @@
 #include <arch_i386/isr.h>
 
 #include <arch_i386/idt.h>
+#include <arch_i386/timer.h>
 #include <lib.h>
 #include <port.h>
 
 /*
- * Puts three nops in the pipeline so that a previous I/O operation can
- * finish if there is bus contention.
+ * Puts three nops in the pipeline so that a previous I/O operation can finish
+ * if there is bus contention.
  */
 static void do_nops();
 
@@ -69,11 +70,11 @@ void isr_bootstrap()
 
 void isr_handler(interrupt_frame_t iframe)
 {
-  kprint("interrupt!");
+  kprint("interrupt!\n");
   int int_num = iframe.interrupt_number;
   /* kprint this number. */
 
-  kprint("hello from isr_handler");
+  kprint("hello from isr_handler\n");
 }
 
 void irq_handler(interrupt_frame_t iframe)
@@ -82,15 +83,15 @@ void irq_handler(interrupt_frame_t iframe)
 
   pic_send_eoi(iframe.interrupt_number);
 
-  kprint("interrupt!");
+  kprint("interrupt!\n");
   /* kprint this number iframe.interrupt_number */
 
-  kprint("hello from irq_handler");
+  kprint("hello from irq_handler\n");
 
   /* IRQ 0 */
   if (iframe.interrupt_number == 32)
   {
-    kprint("handling interrupt 32!");
+    kprint("handling interrupt 32!\n");
     timer_tick_interrupt(iframe);
   }
 }

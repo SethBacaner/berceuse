@@ -1,7 +1,11 @@
 #include <arch_i386/timer.h>
 
-#include <arch_i386/timer.h>
+#include <arch_i386/isr.h>
+#include <arch_i386/types.h>
+
 #include <port.h>
+
+u32 timer_ticks = 0;
 
 void timer_bootstrap()
 {
@@ -11,12 +15,10 @@ void timer_bootstrap()
                                     | TIMER_SQUARE_WAVE_MODE);
   port_byte_out(TIMER_CHANNEL_0_PORT, (u8)(divisor & 0xFF));
   port_byte_out(TIMER_CHANNEL_0_PORT, (u8)(divisor >> 8));
-
-  timer_ticks = 0;
 }
 
 void timer_tick_interrupt(interrupt_frame_t iframe)
 {
   timer_ticks++;
-  kprint("timer tick!");
+  kprint("timer tick!\n");
 }
