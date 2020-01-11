@@ -20,5 +20,5 @@ void timer_bootstrap()
 void timer_tick_interrupt(interrupt_frame_t iframe)
 {
   timer_ticks++;
-  kprint("timer tick!\n");
+  //kprint("timer tick!\n");
 }

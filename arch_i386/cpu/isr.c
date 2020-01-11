@@ -2,6 +2,7 @@
 
 #include <arch_i386/idt.h>
 #include <arch_i386/timer.h>
+#include <keyboard.h>
 #include <lib.h>
 #include <port.h>
 
@@ -83,16 +84,20 @@ void irq_handler(interrupt_frame_t iframe)
 
   pic_send_eoi(iframe.interrupt_number);
 
-  kprint("interrupt!\n");
-  /* kprint this number iframe.interrupt_number */
-
-  kprint("hello from irq_handler\n");
-
-  /* IRQ 0 */
-  if (iframe.interrupt_number == 32)
+  switch (iframe.interrupt_number)
   {
-    kprint("handling interrupt 32!\n");
-    timer_tick_interrupt(iframe);
+    case 32:
+      /* IRQ 0 */
+      //kprint("handling interrupt 32!\n");
+      timer_tick_interrupt(iframe);
+      break;
+    case 33:
+      /* IRQ 1 */
+      kprint("handling interrupt 33!\n");
+      key_press_interrupt();
+      break;
+    default:
+      panic();
   }
 }
 
