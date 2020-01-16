@@ -39,3 +39,34 @@ void panic()
 
   panic();
 }
+
+void kprint_hex(unsigned int n)
+{
+  char buf[11];
+  buf[0] = '0';
+  buf[1] = 'x';
+  buf[10] = '\0';
+
+  unsigned int remainder;
+  unsigned int quotient = n;
+
+  int i = 9;
+  while (i > 1)
+  {
+    remainder = quotient % 16;
+    if (remainder < 10)
+    {
+      buf[i] = 48 + remainder;
+    }
+    else
+    {
+      buf[i] = 55 + remainder;
+    }
+
+    quotient /= 16;
+
+    i--;
+  }
+
+  kprint(buf);
+}

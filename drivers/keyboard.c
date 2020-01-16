@@ -14,6 +14,8 @@ void key_press_interrupt()
   u8 scancode = port_byte_in(0x60);
   // TODO: print scancode only if necessary.
   // TODO: add character to buffer or reset if necessary.
+  // TODO: __asm__ __volatile__("hlt") when a certain scancode is received,
+  // but remember to say goodbye first.
   print_scancode(scancode);
 }
 
@@ -32,6 +34,9 @@ static void print_scancode(u8 scancode)
       break;
     case 0x1c:
       kprint("\n");
+      break;
+    case 0x2a:
+      kprint("lshift");
       break;
     case 0x81:
       /* Escape key release. */
