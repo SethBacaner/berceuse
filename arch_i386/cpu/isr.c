@@ -93,7 +93,6 @@ void irq_handler(interrupt_frame_t iframe)
       break;
     case 33:
       /* IRQ 1 */
-      kprint("handling interrupt 33!\n");
       key_press_interrupt();
       break;
     default:

@@ -19,6 +19,12 @@ void timer_bootstrap()
 
 void timer_tick_interrupt(interrupt_frame_t iframe)
 {
-  timer_ticks++;
-  //kprint("timer tick!\n");
+  if (timer_ticks == 1000)
+  {
+    timer_ticks = 0;
+  }
+  else
+  {
+    timer_ticks++;
+  }
 }

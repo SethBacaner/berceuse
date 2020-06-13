@@ -21,7 +21,11 @@ void key_press_interrupt()
 
 static void print_scancode(u8 scancode)
 {
-  kprint("I will print the keys you press");
+  if (scancode > 0x80) {
+    // The keyboard is telling us a key has been released.
+    return;
+  }
+
   switch (scancode)
   {
     case 0x00:
@@ -38,19 +42,11 @@ static void print_scancode(u8 scancode)
     case 0x2a:
       kprint("lshift");
       break;
-    case 0x81:
-      /* Escape key release. */
-      break;
-    case 0x82:
-      /* 1 release. */
-      break;
-    case 0x9c:
-      /* Enter key release. */
-      break;
     case 0xfd:
       /* Keyboard internal error. We should not panic(), but definitely tell
          the user. Maybe a bell? */
     default:
-      panic();
+      break;
+      //panic();
   }
 }

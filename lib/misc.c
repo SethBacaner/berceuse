@@ -1,8 +1,7 @@
 /*
  * misc.c
  *
- * Implementation of miscellaneous kernel-wide functions that aren't
- * categorized.
+ * Implementation of miscellaneous kernel-wide functions.
  */
 
 #include <lib.h>
