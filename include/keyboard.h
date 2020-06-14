@@ -3,6 +3,6 @@
 
 #include <arch_i386/isr.h>
 
-void key_press_interrupt();
+void keyboard_interrupt();
 
 #endif /* BERCEUSE_ARCH_I386_KEYBOARD_H_ */
