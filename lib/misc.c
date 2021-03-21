@@ -39,6 +39,29 @@ void panic()
   panic();
 }
 
+int kstrcmp(const char *str1, const char *str2)
+{
+  char c1 = *str1;
+  char c2 = *str2;
+
+  while (c1 != '\0' || c2 != '\0') {
+    if (c1 != '\0' && c2 == '\0') {
+      return 1;
+    } else if (c1 == '\0' && c2 != '\0') {
+      return -1;
+    } else if (c1 > c2) {
+      return 1;
+    } else if (c1 < c2) {
+      return -1;
+    }
+
+    c1 = *(++str1);
+    c2 = *(++str2);
+  }
+
+  return 0;
+}
+
 void kprint_hex(unsigned int n)
 {
   char buf[11];

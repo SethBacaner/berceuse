@@ -21,6 +21,10 @@ void assert_failed(const char *expr,
 
 void* kmalloc(u32 size);
 
+void kprint_hex(unsigned int n);
+
+int kstrcmp(const char *str1, const char *str2);
+
 #define LOW_16(x)   (u16)(x & 0x0000FFFF)
 #define HIGH_16(x)  (u16)((x >> 16) & 0xFFFF0000)
 
